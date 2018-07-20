@@ -5,7 +5,7 @@ import pandas as pd
 from pyspark import SparkConf, SparkContext
 from pyspark.sql import SparkSession
 
-os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3.3'
+#os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3'
 
 conf = SparkConf()
 sc = SparkContext(conf = conf)
@@ -18,11 +18,12 @@ filepath = 'keywords-groups.txt'
 
 ch = [('ç','c'),('Ç','C'),('ı','i'),('İ','I'),('ğ','g'),('Ğ','G'),('ü','u'),('ö','o'),('Ş','S'),('ş','s'),('Ö','O'),('Ü','U')]
 
-def convertToEng(twt):
-	twt = str(twt)
+# Replace all characters with English characters.
+def convertToEng(str):
+	str = str(str)
 	for tr, eng in ch:
-		twt  = twt.replace(tr, eng)
-	return twt
+		str  = str.replace(tr, eng)
+	return  str
 
 # Read groups
 with open(filepath) as fp:
@@ -35,27 +36,16 @@ with open(filepath) as fp:
 		line = fp.readline()
 
 
-# Read tweets
-#for line in open('./data/20180508132252', 'r'):
-#	date = json.loads(line)["created_at"].split()
-#	text = convertToEng(json.loads(line)["text"].encode("utf-8")).lower()
-#	tweets.append(dict([("text", text),  ("group", "noGrp"), ("year", date[5]), ("month", date[1]), ("day", date[2])]))
-#tweets.append(dict([("text", json.loads(line)["text"]), ("year", date[5]), ("month", date[1]), ("day", date[2])]))
+# Tweets path
+folder = sys.argv[1] #"./data"
 
 
-################## -- Read tweets (path)
-folder = "./data"
+# Map Function
+def mapFunc(line):
+	date = json.loads(line)["created_at"].split()
+	text = convertToEng(json.loads(line)["text"].encode("utf-8")).lower()
+	x = dict([("text", text),  ("group", "noGrp"), ("year", date[5]), ("month", date[1]), ("day", date[2])])
 
-for file in os.listdir(folder):
-	print(file)
-	filepath = os.path.join(folder, file)
-	for line in open(filepath, 'r'):
-		date = json.loads(line)["created_at"].split()
-		text = convertToEng(json.loads(line)["text"].encode("utf-8")).lower()
-		tweets.append(dict([("text", text),  ("group", "noGrp"), ("year", date[5]), ("month", date[1]), ("day", date[2])]))
-
-
-def mapFunc(x):
 	for i in keywords.keys():
 		for a in keywords[i]:
 			if a in x['text']:
@@ -65,10 +55,9 @@ def mapFunc(x):
 
 
 
-x = sc.parallelize(tweets)
-y = x.map(lambda x: (mapFunc(x), 1)).reduceByKey(lambda x,y : x+y)
+data = sc.textFile(folder, use_unicode=False)
 
-#y = x.map(lambda x: (mapFunc(x),1)).filter(lambda x: "group" in x[0]).reduceByKey(lambda a,b: a+b)
+y = data.map(lambda line: (mapFunc(line),1)).reduceByKey(lambda x,y : x+y)
 y = y.collect()
 
 print(y)
@@ -79,6 +68,6 @@ for i in y:
 df = pd.DataFrame(data)
 df = df[df[0] != "noGrp"]
 
-print(df)
 
+# save results to out.csv file
 df.to_csv('out.csv')

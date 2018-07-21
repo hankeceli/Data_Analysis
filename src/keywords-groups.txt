@@ -1,0 +1,14 @@
+akp,erdoğan,abdullah gül,akp,rte,reis,binali,akparti,millet ittifakı
+mhp,bahçeli,mhp
+iyi parti,akşener,iyi parti
+sp,karamollaoğlu,sp
+hdp,demirtaş,hdp
+btp,haydar baş,btp
+ip,ip
+vp,vatan partisi,vp
+bbp,bbp
+dp,dp
+hüdapar,hüdapar
+işçi partisi,perinçek,işçi partisi
+chp,cumhur ittifakı,chp,kılıçdaroğlu,muharrem
+diğer,ysk,partiler,tbmm,seçim,meclis,başkanlık,cumhurbaşkanlığı,cumhurbaşkanı,sandık,fetö,24 haziran

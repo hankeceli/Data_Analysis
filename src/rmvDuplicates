@@ -1,0 +1,31 @@
+from pyspark import SparkConf, SparkContext
+import sys, os, json, datetime
+from operator import add
+from pyspark.sql import SparkSession
+os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3'
+
+conf = SparkConf()
+sc = SparkContext(conf = conf)
+
+
+def mapFunc(line):
+        tweet = json.loads(line)['id']
+        return tweet
+
+## Burada yardıma ihtiyacım var.
+#  İstenilen dosya adı formatı yıl+ay+gün+... şeklinde
+#  Reduce fonksiyonuna gelen veri string. (tarihit ve saati sağlıklı bir şekilde çekebilmek için dict olmalı)
+#  Yalnızca dosya adı için bütün tweetleri tek tek dictionary haline getirmek çok da mantıklı görünmüyor.
+#  Daha optimal bir çözüme ihtiyacımız olduğunu düşünüyorum.
+
+def redFunc(line1, line2):
+        #created_at = datetime.datetime.strptime(line1["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
+        #print(created_at.month)
+	#filename = "data/"+str(created_at.year)+str('%02d' % created_at.month)+str('%02d' %  created_at.day)+str('%02d' % created_at.hour)+str('%02d' % created_at.minute)+str('%02d' % created_at.second)
+        filename = "./data2/smpl"
+        file=open(filename,'w')
+        file.write(line1)
+        file.close()
+
+input = sc.textFile("./data/")
+input.map(lambda x: (mapFunc(x),x)).reduceByKey(lambda x,y: redFunc(x,y))

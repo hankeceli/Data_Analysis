@@ -12,12 +12,6 @@ def mapFunc(line):
         tweet = json.loads(line)['id']
         return tweet
 
-## Burada yardıma ihtiyacım var.
-#  İstenilen dosya adı formatı yıl+ay+gün+... şeklinde
-#  Reduce fonksiyonuna gelen veri string. (tarihit ve saati sağlıklı bir şekilde çekebilmek için dict olmalı)
-#  Yalnızca dosya adı için bütün tweetleri tek tek dictionary haline getirmek çok da mantıklı görünmüyor.
-#  Daha optimal bir çözüme ihtiyacımız olduğunu düşünüyorum.
-
 def redFunc(line1, line2):
         #created_at = datetime.datetime.strptime(line1["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
         #print(created_at.month)

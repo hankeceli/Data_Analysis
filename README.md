@@ -8,3 +8,6 @@
 
 ## Task1: Unique tweets
 We collected tweets from two developer accounts. Therefore, we need to filter duplicate tweets.
+
+Run:
+* pyspark rmvDuplicates.py

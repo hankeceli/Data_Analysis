@@ -7,7 +7,7 @@
 * @ハン Keçeli規制 Han and @Burak Çolakoğlu: Adopt Task2 code to find the other groups (Mention network - who mentioned who and how many times) (by Saturday, Aug4)
 
 ### Task1: Unique tweets
-We collected tweets from two developer accounts. Therefore, we need to filter duplicate tweets.
+We collected tweets using two developer accounts. Therefore, we need to filter duplicate tweets.
 
 Run:
 * pyspark rmvDuplicates.py

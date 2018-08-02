@@ -13,16 +13,12 @@ def mapFunc(line):
         return tweet
 
 def redFunc(line1, line2):
-        #created_at = datetime.datetime.strptime(line1["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
-        #print(created_at.month)
-	#filename = "data/"+str(created_at.year)+str('%02d' % created_at.month)+str('%02d' %  created_at.day)+str('%02d' % created_at.hour)+str('%02d' % created_at.minute)+str('%02d' % created_at.second)
-        #filename = "./data2/smpl"
 	return line2
 
-input = sc.textFile("./data/")
+inputPath = "./data/"
+input = sc.textFile(inputPath)
+
 output = input.map(lambda x: (mapFunc(x),x)).reduceByKey(lambda x,y: redFunc(x,y))
 
-filename = "./data2/smpl"
-file=open(filename,'w')
-file.write(output)
-file.close()
+outputPath = "./data2/"
+output.saveAsSequenceFile(outputPath)

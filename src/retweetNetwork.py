@@ -43,7 +43,7 @@ for(id, unique_tweet) in output:
 
     
 print("The output of (user1, user2: retweet_count): ")
-response_item = ast.literal_eval(json.dumps(unique_tweet, ensure_ascii=False).encode('utf8'))
+response_item = literal_eval(json.dumps(unique_tweet, ensure_ascii=False).encode('utf8'))
 index = json.loads(response_item)
 
 

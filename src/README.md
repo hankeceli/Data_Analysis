@@ -2,6 +2,7 @@
 
 Task2: Retweet network
 Find users who retweet each other and the number of retweets (user1, user2, count).
+
      - Tested on databricks (https://community.cloud.databricks.com/?o=557162266330102) and jupyter notebook.
      - Upload the dataset(test data) on the cloud databricks
      - Create a notebook and cluster.

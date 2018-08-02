@@ -29,7 +29,7 @@ def redFunc(line1, line2):
 input = sc.textFile('/FileStore/tables/20180624000034.txt')
 
 output = input.map(lambda x: (mapFunc(x),x)).reduceByKey(lambda x,y: redFunc(x,y)).sortByKey(ascending=False).take(1)
-20
+
 
 print("The unique tweet-terms are: \n")
 #printing pairs (unique_tweet and its ID)

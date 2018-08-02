@@ -5,5 +5,5 @@ Find users who retweet each other and the number of retweets (user1, user2, coun
 
      - Tested on databricks (https://community.cloud.databricks.com/?o=557162266330102) and jupyter notebook.
      - Upload the dataset(test data) on the cloud databricks
-     - Create a notebook and cluster.
-     - For for information: https://docs.databricks.com/spark/latest/training/index.html 
+     - Create a notebook and a cluster.
+     - For more information: https://docs.databricks.com/spark/latest/training/index.html 

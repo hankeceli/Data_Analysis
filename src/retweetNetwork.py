@@ -8,9 +8,8 @@ Created on Wed Aug  1 10:53:14 2018
 
 from ast import literal_eval
 from pyspark import SparkConf, SparkContext
-import sys, os, json, datetime
-from operator import add
-from pyspark.sql import SparkSession
+import os, json
+
 os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3'
 
 #spark config
@@ -27,37 +26,36 @@ def mapFunc(line):
 def redFunc(line1, line2):
 	return line2
 
- #reading a single file for now
-input = sc.textFile('/FileStore/tables/20180624000034.txt')
+#reading a single file for now (change it to './data' for spark server)
+data_file = '/FileStore/tables/20180624000034.txt'
+input = sc.textFile(data_file)
 
-#mapReduce for finding unique tweets {tweet: id}
+#mapReduce for unique tweets {tweet: id}
 output = input.map(lambda x: (mapFunc(x),x)).reduceByKey(lambda x,y: redFunc(x,y)).sortByKey(ascending=False).collect()
+
 
 print(":::::::::::::::TASK-2(Result)::::::::::::: \n")
 
-#print("The unique tweet-terms are: \n")
 #printing pairs (unique_tweet and its ID)
+print("The unique tweet-terms are: \n")
 for(id, unique_tweet) in output:
     print("%s: %d" % (unique_tweet, id))
     
     print("\n")
     #print("\n")
-    #print(":::::::::::::::TASK-2(Result)::::::::::::: \n")
-    
 
-    
     print("The output of (user1, user2: retweet_count): ")
     
     #converting unicode of unique tweets to pure json unique_tweets
     jsonUniqueTweet = json.dumps(unique_tweet, ensure_ascii=False)
     
-    #converting to dict
+    #Tweet JSON object to dict
     response_item = literal_eval(jsonUniqueTweet.encode('utf8'))
     index = json.loads(response_item)
     
     # =============================================================================
     # Indexing through index dictionary to fetch the user1 and user2 with the number of retweets
-    # Exception handling: when a retweet key  doesn't exist in a particular tweet.
+    # Exception handling: If retweet key doesn't exist in a particular tweet.
     # =============================================================================
     try:
       print("\t %d, %d, %d " % (index['id'], 
@@ -65,6 +63,6 @@ for(id, unique_tweet) in output:
                            index['retweeted_status']['retweet_count']))
 
       print("\n")
-    except: #Key doesn't exist
+    except: #If retweet_status or retweeet_count (Key) doesn't exist
       print("\t Retweet doesn't exist")
       print("\n")

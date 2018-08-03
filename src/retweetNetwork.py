@@ -40,7 +40,7 @@ print(":::::::::::::::TASK-2(Result)::::::::::::: \n")
 for(id, unique_tweet) in output:
     print("%s: %d" % (unique_tweet, id))
     
-    #print("\n")
+    print("\n")
     #print("\n")
     #print(":::::::::::::::TASK-2(Result)::::::::::::: \n")
     

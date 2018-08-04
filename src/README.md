@@ -13,9 +13,4 @@ Find users who retweet each other and the number of retweets (user1, user2, coun
 
 - Utility programs for twitter: https://github.com/SMAPPNYU/smappPy
 
-[PDF] Examining trolls and polarization with a retweet network
-LG Stewart, A Arif, K Starbird - … Mining on the Web (to appear …, 2018 - faculty.washington.edu
-… From this subset, we constructed a retweet graph where each node in the graph represents a
-Twitter account and directed edges between nodes … communities, as seen in Figure 1. We see
-that the two clusters—purple and green—appear as two distinct groups in the graph …
-  Cited by 4 Related articles All 3 versions 
+- "Examining trolls and polarization with a retweet network", LG Stewart, A Arif, K Starbird - … Mining on the Web 2018 http://faculty.washington.edu/kstarbi/examining-trolls-polarization.pdf

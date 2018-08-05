@@ -11,9 +11,9 @@ Find users who retweet each other and the number of retweets (user1, user2, coun
    
 ## Extracting Unique Tweets
 
-- Upload data to HDFS
-*
-- Run
+### Upload data to HDFS
+-
+### Run
 * nohup python3 rmvDuplicates.py &
 
 ## Retweet networks

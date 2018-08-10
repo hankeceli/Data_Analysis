@@ -16,22 +16,8 @@ os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3'
 conf = SparkConf()
 sc = SparkContext.getOrCreate()
 
-
-def mapFunc(line):
-  tweetJSON = json.loads(line)
-  tweet = tweetJSON['id']
-  return tweet
-  
-
-def redFunc(line1, line2):
-	return line2
-
 #reading a single file for now (change it to './data' for spark server)
 data_file = '/FileStore/tables/20180624000034.txt'
-input = sc.textFile(data_file)
-
-#mapReduce for unique tweets {tweet: id}
-output = input.map(lambda x: (mapFunc(x),x)).reduceByKey(lambda x,y: redFunc(x,y)).sortByKey(ascending=False).collect()
 
 
 print(":::::::::::::::TASK-2(Result)::::::::::::: \n")

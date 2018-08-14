@@ -5,6 +5,13 @@ Created on Wed Aug  12 10:53:14 2018
 
 @author: hamza.mohammed
 """
+from ast import literal_eval
+from pyspark import SparkConf, SparkContext
+import sys, os, json
+os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3'
+
+conf = SparkConf()
+sc = SparkContext.getOrCreate()
 
 
 #2nd version retweetNetwork

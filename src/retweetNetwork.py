@@ -7,8 +7,8 @@ Created on Wed Aug  12 10:53:14 2018
 """
 from ast import literal_eval
 from pyspark import SparkConf, SparkContext
-import sys, os, json
-os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3'
+import sys, json
+
 
 conf = SparkConf()
 sc = SparkContext.getOrCreate()

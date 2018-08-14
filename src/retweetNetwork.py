@@ -1,54 +1,48 @@
 # Databricks notebook source
 # -*- coding: utf-8 -*-
 """
-Created on Wed Aug  1 10:53:14 2018
+Created on Wed Aug  12 10:53:14 2018
 
 @author: hamza.mohammed
 """
 
-from ast import literal_eval
-from pyspark import SparkConf, SparkContext
-import os, json
 
-os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3'
-
-#spark config
-conf = SparkConf()
-sc = SparkContext.getOrCreate()
-
-#reading a single file for now (change it to './data' for spark server)
-data_file = '/FileStore/tables/20180624000034.txt'
-
-
-print(":::::::::::::::TASK-2(Result)::::::::::::: \n")
-
-#printing pairs (unique_tweet and its ID)
-print("The unique tweet-terms are: \n")
-for(id, unique_tweet) in output:
-    print("%s: %d" % (unique_tweet, id))
-    
-    print("\n")
-    #print("\n")
-
-    print("The output of (user1, user2: retweet_count): ")
-    
+#2nd version retweetNetwork
+def mapTweet(line):
+  retweetList = []
+    #=========================================================================================
+    # Exception handling: when a retweet key  doesn't exist in a particular tweet.
+    # ========================================================================================
+  try:
     #converting unicode of unique tweets to pure json unique_tweets
-    jsonUniqueTweet = json.dumps(unique_tweet, ensure_ascii=False)
+    jsonUniqueTweet = json.dumps(line, ensure_ascii=False)
     
-    #Tweet JSON object to dict
-    response_item = literal_eval(jsonUniqueTweet.encode('utf8'))
+    #dict
+    response_item = ast.literal_eval(jsonUniqueTweet.encode('utf8'))
     index = json.loads(response_item)
     
-    # =============================================================================
-    # Indexing through index dictionary to fetch the user1 and user2 with the number of retweets
-    # Exception handling: If retweet key doesn't exist in a particular tweet.
-    # =============================================================================
-    try:
-      print("\t %d, %d, %d " % (index['id'], 
-                           index['retweeted_status']['id'],
-                           index['retweeted_status']['retweet_count']))
+    # ===========================================================================================
+    #Fetch the user1 and user2 with the number of retweets
+    #Making (User1, User2) as Key, while retweet count as the Valeu
+    # ===========================================================================================
+    user1 = index['user']['id_str']
+    user2 = index['retweeted_status']['user']['id_str']
+    retweetList.append([user1+ " , "+ user2, 1])
+    return retweetList
+  except:
+    return retweetList
 
-      print("\n")
-    except: #If retweet_status or retweeet_count (Key) doesn't exist
-      print("\t Retweet doesn't exist")
-      print("\n")
+
+
+
+file = sc.textFile('/FileStore/tables/20180624000034')
+mapTweets = file.flatMap(lambda line: mapTweet(line))
+reducePairUserRetweets = mapTweets.reduceByKey(lambda a,b:a+b).collect()
+
+#print(reducePairUserRetweets)
+reducePairUserRetweets.saveAsTextFile('/FileStore/tables/2ndVersRetweetNetwork')
+
+
+#Checking the content of the save file
+#y = sc.textFile('/FileStore/tables/2ndVersRetweetNetwork')
+#print(y.collect())

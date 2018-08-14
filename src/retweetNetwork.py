@@ -17,9 +17,9 @@ sc = SparkContext.getOrCreate()
 #2nd version retweetNetwork
 def mapTweet(line):
   retweetList = []
-    #=========================================================================================
+    #============================================================================================
     # Exception handling: when a retweet key  doesn't exist in a particular tweet.
-    # ========================================================================================
+    # ===========================================================================================
   try:
     #converting unicode of unique tweets to pure json unique_tweets
     jsonUniqueTweet = json.dumps(line, ensure_ascii=False)
@@ -30,7 +30,7 @@ def mapTweet(line):
     
     # ===========================================================================================
     #Fetch the user1 and user2 with the number of retweets
-    #Making (User1, User2) as Key, while retweet count as the Valeu
+    #Making (User1, User2) as Key, while retweetCount as the Value
     # ===========================================================================================
     user1 = index['user']['id_str']
     user2 = index['retweeted_status']['user']['id_str']
@@ -47,6 +47,7 @@ mapTweets = file.flatMap(lambda line: mapTweet(line))
 reducePairUserRetweets = mapTweets.reduceByKey(lambda a,b:a+b).collect()
 
 #print(reducePairUserRetweets)
+#Saving to directory
 reducePairUserRetweets.saveAsTextFile('/FileStore/tables/2ndVersRetweetNetwork')
 
 

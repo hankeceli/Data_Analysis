@@ -23,3 +23,9 @@ Find users who mentioned other users and the number of tweets that mention the o
 
 Run:
 * pyspark mentionNetwork.py
+
+
+### Papers:
+Examining trolls and polarization with a retweet network
+LG Stewart, A Arif, K Starbird - … Mining on the Web 2018
+http://faculty.washington.edu/kstarbi/examining-trolls-polarization.pdf

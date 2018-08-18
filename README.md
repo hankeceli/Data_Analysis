@@ -26,6 +26,6 @@ Run:
 
 
 ### Papers
-Examining trolls and polarization with a retweet network
-LG Stewart, A Arif, K Starbird, ACM Mining on the Web 2018
+Examining trolls and polarization with a retweet network<br>
+LG Stewart, A Arif, K Starbird, ACM Mining on the Web 2018<br>
 http://faculty.washington.edu/kstarbi/examining-trolls-polarization.pdf

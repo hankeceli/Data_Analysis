@@ -25,7 +25,7 @@ Run:
 * pyspark mentionNetwork.py
 
 
-### Papers:
+### Papers
 Examining trolls and polarization with a retweet network
-LG Stewart, A Arif, K Starbird - … Mining on the Web 2018
+LG Stewart, A Arif, K Starbird, ACM Mining on the Web 2018
 http://faculty.washington.edu/kstarbi/examining-trolls-polarization.pdf

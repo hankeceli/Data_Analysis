@@ -16,24 +16,22 @@ sc = SparkContext.getOrCreate()
 #2nd version retweetNetwork
 def mapTweet(line):
   retweetList = []
-    #============================================================================================
-    # Exception handling: when a retweet key  doesn't exist in a particular tweet.
-    # ===========================================================================================
-    
+   
   #converting unicode of unique tweets to pure json unique_tweets
   jsonUniqueTweet = json.dumps(line, ensure_ascii=False)
-  
   #dict
   response_item = literal_eval(jsonUniqueTweet.encode('utf8'))
   
-  
+    #============================================================================================
+    # Exception handling: when a retweet key doesn't exist in a particular tweet.
+    # ===========================================================================================
   try:
-    index = json.loads(response_item)
+    tweet = json.loads(response_item)
     # ===========================================================================================
     #Fetch the user1 and user2 with the number of retweets
     #Making (User1, User2) as Key, while retweetCount as the Value
     # ===========================================================================================
-    retweetList.append([index.get('user').get('id_str')+ " , "+ index.get('retweeted_status').get('user').get('id_str'), 1])
+    retweetList.append([tweet.get('user').get('id_str')+ " , "+ tweet.get('retweeted_status').get('user').get('id_str'), 1])
     return retweetList
   except:
      return retweetList
@@ -48,9 +46,9 @@ reducePairUserRetweets = mapTweets.reduceByKey(lambda a,b:a+b).collect()
 
 print(reducePairUserRetweets)
 #Saving to directory
-#reducePairUserRetweets.saveAsTextFile('/FileStore/tables/2ndVersRetweetNetwork')
+#reducePairUserRetweets.saveAsTextFile('/FileStore/tables/retweetNetworkOut_FILE')
 
 
-#Checking the content of the save file
-#y = sc.textFile('/FileStore/tables/2ndVersRetweetNetwork')
+#Checking the content of the saved file/directory
+#y = sc.textFile('/FileStore/tables/retweetNetworkOut_FILE')
 #print(y.collect())
